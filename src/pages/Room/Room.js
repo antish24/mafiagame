@@ -59,7 +59,10 @@ const Room = () => {
         <div className={styles.players}>
             {Players.map(l=><PlayerCard key={l._id} {...l}/>)}
         </div>
-        <div className={styles.sharebox}>{gameCode}<FaCopy color={isCopy?'green':"gray"} onClick={copyFun}/>{isCopy&&"Copied"}</div>
+        <div className={styles.sharebox}>
+          <span className={styles.gamecode}>game code: {gameCode}</span>
+          <div className={styles.info}>Copy & Share to friends<FaCopy color={isCopy?'green':"gray"} onClick={copyFun}/>{isCopy&&"Copied"}</div>
+        </div>
         <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick} onClick={StartGame}>Start game!</button>
         <span className={styles.btninfo}>the game can be started by the room owner now!</span>
     </div>
