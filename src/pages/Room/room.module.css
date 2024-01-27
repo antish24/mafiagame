@@ -33,7 +33,7 @@
 .sharebox{
     width: 100%;
     height: 100px;
-    background: #e8e8e8;
+    box-shadow: 0 0 1px black;
 }
 .startbtn{
     width: 150px;

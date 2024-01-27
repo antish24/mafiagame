@@ -7,7 +7,7 @@ const CommentCard = (l) => {
         <div className={styles.pic}></div>
         <div className={styles.chatcont}>
             <div className={styles.detail}>
-                <span className={styles.name}>{l.name}</span>
+                <span className={styles.name}>{l.userName}</span>
                 <span className={styles.time}>{l.time}</span>
             </div>
             <div className={styles.msg}>{l.msg}</div>

@@ -1,36 +1,48 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './chat.module.css'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import CommentCard from '../CommentCard/CommentCard'
+import axios from 'axios';
+import {BACKENDURL} from '../../helper/Url';
 
 const Chat = () => {
     const [openChat,setOpenChat]=useState(false)
+    const [sendChat,setSendChat]=useState(false)
     const [msgValue,setMsgValue]=useState('')
     const chatListRef=useRef(null)
 
-    const [chats,setChats]=useState([
-      {id:1,name:'smaimab',time:'today 2:44 pm',msg:"my name is anteneh ,this is the biograph of me i have mid exam out of 15 and 30 compiler design and computer security"},
-      {id:2,name:'nfffati',time:'today 2:54 pm',msg:"out of 15 and 30 compiler design and computer security"},
-      {id:3,name:'abitabit',time:'today 2:58 pm',msg:"is is the biograph of me i have mid exam out of 15 and 30 compiler design and computer security"},
-      {id:4,name:'ish5454',time:'today 3:44 pm',msg:" of me i have mid exam out of 15 and 30 compiler design and computer security"},
-    ])
+    const [chats,setChats]=useState([])
 
     const sendMsg=async(e)=>{
       e.preventDefault()
-      setMsgValue('')
-      const newChat = {
-        id: chats.length + 1,
-        name: "chla",
-        time: new Date().toLocaleString(),
-        msg: msgValue
-      };
-
-      setChats([newChat,...chats]);
-
+      setSendChat(true)
+      try {
+        let token = localStorage.getItem ('gameUserToken');
+        const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token})
+        console.log(res)
+        setMsgValue('')
+        setSendChat(false)
+      } catch (error) {
+        console.log(error)
+        setSendChat(false)
+      }
       if (chatListRef.current) {
         chatListRef.current.scrollTop =('-100%');
       }
     }
+
+    useEffect (() => {
+      const getUserData = async () => {
+        let token = localStorage.getItem ('gameUserToken');
+        try {
+          const res = await axios.get (`${BACKENDURL}/chat/chats?token=${token}`);
+          setChats(res.data.chats)
+        } catch (error) {
+          console.log(error)
+        }
+      };
+      getUserData ();
+    }, [sendChat,openChat]);
 
   return (
     <div className={styles.cont} style={{height:openChat?"400px":'30px'}}>
@@ -41,11 +53,11 @@ const Chat = () => {
             <span>{openChat?<FaArrowDown/>:<FaArrowUp/>}</span>
         </div>
         <div className={styles.chats} ref={chatListRef}>
-            {chats.map(l=><CommentCard key={l.id} {...l}/>)}
+            {chats.map(l=><CommentCard key={l._id} {...l}/>)}
         </div>
         <form className={styles.msgbox} onSubmit={sendMsg}>
             <input required maxLength={160} value={msgValue} onChange={(e)=>setMsgValue(e.target.value)} placeholder='Message'/>
-            <button type='submit' hidden></button>
+            <button type='submit' hidden disabled={sendChat}></button>
         </form>
     </div>
   )
