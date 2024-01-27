@@ -1,0 +1,34 @@
+:root {
+  /* Brand Colors */
+  --brand-color: rgb(1, 39, 70);
+  --brand-color3: #fb6f0a;
+  --brand-color2: #008cff53;
+  
+  /* Background Colors */
+  --background-light: rgb(255, 255, 255);
+
+  /* Text Colors */
+  --text-dark: rgb(39, 39, 39);
+  --text-light: rgb(255, 255, 255);
+  
+  /* Error/Alert Colors */
+  --color-error: #da1e28;
+  --color-warning: #FFC107;
+  --color-success: #28A745;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::-webkit-scrollbar{
+  width: 5px;
+  background: white;
+}
+::-webkit-scrollbar-thumb{
+  background: slategray;
+}

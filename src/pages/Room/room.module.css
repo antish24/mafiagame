@@ -1,0 +1,58 @@
+.cont{
+    width: calc(95% - 20px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+    gap: 10px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 0 1px black;
+}
+.title{
+    font-size: 25px;
+    font-weight: bold;
+    width: 100%;
+}
+.subtitle{
+    width: 100%;
+    font-size: 18px;
+}
+.players{
+    width: 100%;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: scroll;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+.sharebox{
+    width: 100%;
+    height: 100px;
+    background: #e8e8e8;
+}
+.startbtn{
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    background: rgb(0,140,255);
+    cursor: pointer;
+}
+.startbtn:disabled{
+    cursor: not-allowed;
+    color: gray;
+    background: gainsboro;
+}
+.btninfo{
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+}
