@@ -22,7 +22,7 @@ const PlayerCard = (l) => {
       <div className={styles.pic}></div>
       <div className={styles.userinfo}>
         <span className={styles.name}>{l.userName}</span>
-        <span className={styles.role}>{l.kick}{l._id}</span>
+        <span className={styles.role}>{l.role}</span>
       </div>
       {l.role==='host'&&<div className={styles.host}><FaGhost/></div>}
       {(l.kick===l.canKick&&l.role!=='host')&&<div className={styles.action}><IoIosRemoveCircle onClick={KickPlayer}/></div>}
