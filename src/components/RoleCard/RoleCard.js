@@ -8,18 +8,22 @@ import { BACKENDURL } from '../../helper/Url'
 
 const RoleCard = ({character}) => {
   const [showFront, setshowFront] = useState (true);
+  const [loading, setLoading] = useState (false);
   
   const navigate=useNavigate()
 
   const continueGame=async()=>{
+    setLoading(true)
     try {
         let gameCode = localStorage.getItem ('playerGameCode');
         let token = localStorage.getItem ('gameUserToken');
       const res=await axios.post(`${BACKENDURL}/game/ready`,{token:token,gameCode:gameCode})
       console.log(res)
+      setLoading(true)
       navigate('/game')
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
   return (
@@ -40,7 +44,7 @@ const RoleCard = ({character}) => {
             iption role description role description role description role descr
             iption role  description 
             </span>
-            <button className={styles.contbtn} onClick={continueGame}>Continue</button>
+            <button className={styles.contbtn} onClick={continueGame}>{loading?"......":"Continue"}</button>
         </div>}
     </div>
   );

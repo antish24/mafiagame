@@ -11,6 +11,8 @@ const Room = () => {
   const gameCode=params.gamecode
   localStorage.setItem('playerGameCode',gameCode)
 
+    const [starting,setStarting]=useState(false)
+
     const [Players,setPlayers]=useState([])
     const [playerCount,setPlayerCount]=useState()
     const [playerSize,setPlayerSize]=useState()
@@ -44,12 +46,15 @@ const Room = () => {
     },[gameCode,navigate])
     
     const StartGame=async()=>{
+      setStarting(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
         const res=await axios.post(`${BACKENDURL}/game/start`,{token:token})
         console.log(res)
+        setStarting(false)
         navigate('/role')
       } catch (error) {
+        setStarting(false)
         setRoomErrorMsg(error.response.data.message)
         setTimeout(() => {
           setRoomErrorMsg('');
@@ -78,7 +83,7 @@ const Room = () => {
           <span className={styles.gamecode} onClick={copyFun}>game code: {gameCode}</span>
           <div className={styles.info}>Copy & Share to friends<FaCopy color={isCopy?'green':"gray"} onClick={copyFun}/>{isCopy&&"Copied"}</div>
         </div>
-        <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick} onClick={StartGame}>Start game!</button>
+        <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick||starting} onClick={StartGame}>{starting?'Starting':"Start game!"}</button>
         <span className={styles.btninfo}>{roomErrorMsg?roomErrorMsg:'the game can be started by the room host now!'}</span>
     </div>
     :

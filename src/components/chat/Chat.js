@@ -21,7 +21,12 @@ const Chat = () => {
         let token = localStorage.getItem ('gameUserToken');
         const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token,gameCode:localStorage.getItem('playerGameCode')})
         console.log(res)
+        setChatErr('.....')
         setMsgValue('')
+        setTimeout(() => {
+          setChatErr('');
+        }, 3000);
+        
         setSendChat(false)
       } catch (error) {
         console.log(error)
