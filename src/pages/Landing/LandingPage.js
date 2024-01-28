@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './landingpage.module.css';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
@@ -48,6 +48,21 @@ const LandingPage = () => {
       setPageError(error.response.data.message)
     }
   };
+
+
+  useEffect (() => {
+    const getUserData = async () => {
+      let token = localStorage.getItem ('gameUserToken');
+      try {
+        await axios.get (`${BACKENDURL}/user/data?token=${token}`);
+        navigate('/home')
+      } catch (error) {
+        navigate('/')
+      }
+    };
+    getUserData ();
+  }, [navigate]);
+
 
   return (
     <div className={styles.cont}>
