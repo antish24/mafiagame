@@ -1,7 +1,43 @@
 .cont{
-    width: 95%;
+    width: calc(95% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
     height: 70px;
     background: white;
     margin-top: 8px;
     box-shadow: 0 0 1px black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cont a{
+    text-decoration: none;
+    color: rgb(0,140,255);
+    font-weight: bold;
+    font-size: 20px;
+}
+.infobox{
+    position: relative;
+}
+.info{
+    position: absolute;
+    right: 0;
+    top: 30px;
+    width: 250px;
+    height: 400px;
+    background: white;
+    box-shadow: 0 0 1px black;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+}
+.info span{
+    font-weight: bold;
+    font-size: 20px;
+}
+.info p{
+    font-size: 15px;
+    text-align: left;
 }

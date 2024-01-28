@@ -27,4 +27,8 @@
 }
 .msg{
     font-size: 15px;
+    display: flex;
+    word-break: break-all;
+    white-space:wrap;
+    max-height:150px;
 }

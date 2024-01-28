@@ -12,19 +12,21 @@ const Chat = () => {
     const chatListRef=useRef(null)
 
     const [chatErr,setChatErr]=useState()
+    const [chatSent,setChatSent]=useState()
     const [chats,setChats]=useState([])
 
     const sendMsg=async(e)=>{
       e.preventDefault()
+      setChatSent('sending')
       setSendChat(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
         const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token,gameCode:localStorage.getItem('playerGameCode')})
         console.log(res)
-        setChatErr('.....')
         setMsgValue('')
+        setChatSent('sent')
         setTimeout(() => {
-          setChatErr('');
+          setChatSent('');
         }, 3000);
         
         setSendChat(false)
@@ -64,6 +66,7 @@ const Chat = () => {
         </div>
         <div className={styles.chats} ref={chatListRef}>
           {chatErr && <span style={{color:'red',textAlign:'center'}}>{chatErr}</span>}
+          {chatSent && <span style={{color:'green',textAlign:'center'}}>{chatSent}</span>}
           {chats.map(l=><CommentCard key={l._id} {...l}/>)}
         </div>
         <form className={styles.msgbox} onSubmit={sendMsg}>

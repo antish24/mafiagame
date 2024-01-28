@@ -82,6 +82,12 @@ const AccountForm = () => {
     getUserData ();
   }, [navigate,editAccount]);
 
+  const SeleteGame=async()=>{
+    while(window.confirm("are you sure ?")){
+      window.confirm("are you sure ?")
+    }
+    alert('Fuck you')
+  }
   return (
     <div className={styles.cont}>
       {editAccount
@@ -116,7 +122,13 @@ const AccountForm = () => {
             </div>
             <span className={styles.editbtn} onClick={()=>setEditAccount(true)}>edit</span>
         </div>
-        <div className={styles.statbox}></div>
+        <div className={styles.statbox} onClick={SeleteGame}>
+          <span>Game 1: DC Game</span>
+          <span>Game 2: ISH</span>
+          <span>Game 3: NIGER</span>
+          <span>Game 4: hjlgh</span>
+          <span>Game 5: hjlgh</span>
+        </div>
         <button className={styles.logoutbtn} disabled={islogout} onClick={LogoutFun}>{islogout?"Lo....":"Logout"}</button>
         <span className={styles.logouterror}>{logoutError}</span>
         </>}
