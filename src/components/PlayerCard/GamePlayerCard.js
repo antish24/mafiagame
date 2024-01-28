@@ -9,7 +9,7 @@ const GamePlayerCard = (l) => {
         </div>
         <div className={styles.userinfo}>
             <span className={styles.name}>{l.name}</span>
-            <span className={styles.des}>{l.status}</span>
+            <span className={styles.des}>{l.status==='Ready'?l.status:'No Action'}</span>
         </div>
     </div>
   )

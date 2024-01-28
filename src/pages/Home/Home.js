@@ -5,7 +5,7 @@ import JoinRoom from '../../components/Form/JoinRoom';
 import AccountForm from '../../components/Form/AccountForm';
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState (1);
+  const [activeTab, setActiveTab] = useState (2);
   const Tab = [{id: 1, name: 'Create room'}, {id: 2, name: 'Join room'}];
 
   return (

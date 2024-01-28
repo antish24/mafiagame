@@ -3,6 +3,7 @@ import styles from './accountform.module.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
+import SmallError from '../Errors/SmallError';
 
 const AccountForm = () => {
   const [userName, setUserName] = useState ('');
@@ -12,6 +13,7 @@ const AccountForm = () => {
 
   const navigate = useNavigate ();
   const [updateError, setUpdateError] = useState ('');
+  const [updateErrorBg, setUpdateErrorBg] = useState ('red');
   const [logoutError, setLogoutError] = useState ('');
   const [islogout, setIsLogout] = useState (false);
   const [updating, setUpdating] = useState (false);
@@ -39,6 +41,7 @@ const AccountForm = () => {
   const updateFun = async (e) => {
     e.preventDefault()
     setUpdateError('')
+    setUpdateErrorBg('red')
     if (window.confirm ('are you sure?')) {
         setUpdating(true)
         let token = localStorage.getItem ('gameUserToken');
@@ -47,6 +50,7 @@ const AccountForm = () => {
             token: token,userName:userName,email:userEmail,password:password
           });
           setUpdating (false);
+          setUpdateErrorBg('green')
           setUpdateError(res.data.message)
           setTimeout(() => {
             setUpdateError('');
@@ -96,7 +100,8 @@ const AccountForm = () => {
                 <span className={styles.lable}>Password</span>
                 <input className={styles.input} value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
-            <span className={styles.updateerror}>{updateError}</span>
+            {/* <span className={styles.updateerror}>{updateError}</span> */}
+            {updateError && <SmallError text={updateError} color={'white'} bg={updateErrorBg}/>}
             <button className={styles.updatebtn} type='submit' disabled={updating}>Update</button>
             <button className={styles.cancelbtn} onClick={()=>setEditAccount(false)}>Cancel</button>
         </form>

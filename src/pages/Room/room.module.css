@@ -82,12 +82,14 @@
 }
 .gamecode{
     font-size: 20px;
+    cursor: pointer;
 }
 .info{
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 .startbtn{
     width: 150px;

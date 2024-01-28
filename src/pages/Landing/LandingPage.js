@@ -3,6 +3,7 @@ import styles from './landingpage.module.css';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {BACKENDURL} from '../../helper/Url'
+import SmallError from '../../components/Errors/SmallError';
 
 const LandingPage = () => {
   const [email, setEmail] = useState ();
@@ -99,7 +100,8 @@ const LandingPage = () => {
         <button type="submit" disabled={loading} className={styles.loginbtn}>
           {hasAccount ? loading?"L...":'Login' : loading?"R...":'Register'}
         </button>
-        {pageError && <span className={styles.errortext} style={{background:pageErrorColor}}>{pageError}</span>}
+        {/* {pageError && <span className={styles.errortext} style={{background:pageErrorColor}}>{pageError}</span>} */}
+        {pageError && <SmallError color={'white'} bg={pageErrorColor} text={pageError}/>}
       </form>
     </div>
   );

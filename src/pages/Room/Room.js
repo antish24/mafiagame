@@ -27,6 +27,7 @@ const Room = () => {
         try {
           let token = localStorage.getItem ('gameUserToken');
           const res=await axios.post(`${BACKENDURL}/game/players`,{token:token,gameCode:gameCode})
+          if(res.data.playerStatus)navigate('/role')
           setPlayers(res.data.players)
           setKick(res.data.kick)
           setRoomName(res.data.RoomName)
@@ -36,13 +37,24 @@ const Room = () => {
         } catch (error) {
           setRoomErrorMsg(error.response.data.message)
           setRoomError(true)
+          console.log(error)
         }
       }
       getPlayers()
     },[gameCode,navigate])
     
     const StartGame=async()=>{
-      navigate('/role')
+      try {
+        let token = localStorage.getItem ('gameUserToken');
+        const res=await axios.post(`${BACKENDURL}/game/start`,{token:token})
+        console.log(res)
+        navigate('/role')
+      } catch (error) {
+        setRoomErrorMsg(error.response.data.message)
+        setTimeout(() => {
+          setRoomErrorMsg('');
+        }, 3000);
+      }
     }
 
     const [isCopy,setIsCopy]=useState(false)
@@ -63,11 +75,11 @@ const Room = () => {
             {Players.map(l=><PlayerCard key={l._id} {...l}/>)}
         </div>
         <div className={styles.sharebox}>
-          <span className={styles.gamecode}>game code: {gameCode}</span>
+          <span className={styles.gamecode} onClick={copyFun}>game code: {gameCode}</span>
           <div className={styles.info}>Copy & Share to friends<FaCopy color={isCopy?'green':"gray"} onClick={copyFun}/>{isCopy&&"Copied"}</div>
         </div>
         <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick} onClick={StartGame}>Start game!</button>
-        <span className={styles.btninfo}>the game can be started by the room owner now!</span>
+        <span className={styles.btninfo}>{roomErrorMsg?roomErrorMsg:'the game can be started by the room host now!'}</span>
     </div>
     :
     <div className={styles.errbox}>
