@@ -49,7 +49,7 @@ const Room = () => {
       setStarting(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
-        const res=await axios.post(`${BACKENDURL}/game/start`,{token:token})
+        const res=await axios.post(`${BACKENDURL}/game/start`,{token:token,gameCode:gameCode})
         console.log(res)
         setStarting(false)
         navigate('/role')
