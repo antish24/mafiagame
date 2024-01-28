@@ -22,7 +22,6 @@ const LandingPage = () => {
     setPageErrorColor('red')
     try {
       const res=await axios.post(`${BACKENDURL}/user/login`,{email:email,password:password})
-      console.log(res.data)
       localStorage.setItem('gameUserToken',res.data.token)
       setLoading(false)
       navigate('/home')

@@ -23,6 +23,9 @@ const JoinRoom = () => {
   } catch (error) {
       setJoining(false)
       setJoinError(error.response.data.message)
+      setTimeout(() => {
+        setJoinError('');
+      }, 3000);
       console.log(error)
   }
     setJoining(false)
@@ -34,7 +37,7 @@ const JoinRoom = () => {
             <span className={styles.lable}>Room code</span>
             <input placeholder='#gbiu367' required value={roomCode} onChange={(e)=>setRoomCode(e.target.value)} type='text' name='code' className={styles.input}/>
         </div>
-        <span>{JoinError}</span>
+        <span style={{color:'red'}}>{JoinError}</span>
         <button type='submit' disabled={joining}>{joining?"Joning":"Join Room"}</button>
     </form>
   )

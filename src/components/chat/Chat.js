@@ -11,6 +11,7 @@ const Chat = () => {
     const [msgValue,setMsgValue]=useState('')
     const chatListRef=useRef(null)
 
+    const [chatErr,setChatErr]=useState()
     const [chats,setChats]=useState([])
 
     const sendMsg=async(e)=>{
@@ -18,12 +19,16 @@ const Chat = () => {
       setSendChat(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
-        const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token})
+        const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token,gameCode:localStorage.getItem('playerGameCode')})
         console.log(res)
         setMsgValue('')
         setSendChat(false)
       } catch (error) {
         console.log(error)
+        setChatErr(error.response.data.message)
+        setTimeout(() => {
+          setChatErr('');
+        }, 3000);
         setSendChat(false)
       }
       if (chatListRef.current) {
@@ -35,10 +40,10 @@ const Chat = () => {
       const getUserData = async () => {
         let token = localStorage.getItem ('gameUserToken');
         try {
-          const res = await axios.get (`${BACKENDURL}/chat/chats?token=${token}`);
+          const res = await axios.get (`${BACKENDURL}/chat/chats?token=${token}&&gameCode=${localStorage.getItem('playerGameCode')}`);
           setChats(res.data.chats)
         } catch (error) {
-          console.log(error)
+          setChatErr(error.response.data.message)
         }
       };
       getUserData ();
@@ -53,7 +58,8 @@ const Chat = () => {
             <span>{openChat?<FaArrowDown/>:<FaArrowUp/>}</span>
         </div>
         <div className={styles.chats} ref={chatListRef}>
-            {chats.map(l=><CommentCard key={l._id} {...l}/>)}
+          {chatErr && <span style={{color:'red',textAlign:'center'}}>{chatErr}</span>}
+          {chats.map(l=><CommentCard key={l._id} {...l}/>)}
         </div>
         <form className={styles.msgbox} onSubmit={sendMsg}>
             <input required maxLength={160} value={msgValue} onChange={(e)=>setMsgValue(e.target.value)} placeholder='Message'/>

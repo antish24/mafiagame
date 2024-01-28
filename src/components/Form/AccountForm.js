@@ -48,9 +48,15 @@ const AccountForm = () => {
           });
           setUpdating (false);
           setUpdateError(res.data.message)
+          setTimeout(() => {
+            setUpdateError('');
+          }, 3000);
         } catch (error) {
           setUpdateError(error.response.data.message);
           setUpdating (false);
+          setTimeout(() => {
+            setUpdateError('');
+          }, 3000);
         }
       }
   };

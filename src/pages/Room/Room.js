@@ -9,11 +9,14 @@ import { FaCopy } from 'react-icons/fa'
 const Room = () => {
   const params =useParams()
   const gameCode=params.gamecode
+  localStorage.setItem('playerGameCode',gameCode)
 
     const [Players,setPlayers]=useState([])
     const [playerCount,setPlayerCount]=useState()
     const [playerSize,setPlayerSize]=useState()
     const [roomName,setRoomName]=useState()
+    const [roomError,setRoomError]=useState(false)
+    const [roomErrorMsg,setRoomErrorMsg]=useState('')
     const [kick,setKick]=useState()
     const [canKick,setCanKick]=useState()
 
@@ -25,15 +28,14 @@ const Room = () => {
           let token = localStorage.getItem ('gameUserToken');
           const res=await axios.post(`${BACKENDURL}/game/players`,{token:token,gameCode:gameCode})
           setPlayers(res.data.players)
-          console.log(res.data)
           setKick(res.data.kick)
           setRoomName(res.data.RoomName)
           setCanKick(res.data.canKick)
           setPlayerSize(res.data.playerSize)
           setPlayerCount(res.data.playerCount)
         } catch (error) {
-          console.log(error)
-        navigate('/home')
+          setRoomErrorMsg(error.response.data.message)
+          setRoomError(true)
         }
       }
       getPlayers()
@@ -53,7 +55,8 @@ const Room = () => {
     }
 
   return (
-    <div className={styles.cont}>
+    <>{!roomError ?
+      <div className={styles.cont}>
         <span className={styles.title}>{roomName}</span>
         <span className={styles.subtitle}>Player ({playerCount}/{playerSize})</span>
         <div className={styles.players}>
@@ -66,6 +69,16 @@ const Room = () => {
         <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick} onClick={StartGame}>Start game!</button>
         <span className={styles.btninfo}>the game can be started by the room owner now!</span>
     </div>
+    :
+    <div className={styles.errbox}>
+      <div className={styles.errcont}>
+      <span className={styles.errspan}>{roomErrorMsg}</span>
+      <span className={styles.suberrspan}>you kick by the host or your token exipered</span>
+      </div>
+      <span className={styles.errbtn} onClick={()=>navigate('/home')}>Back to Home</span>
+    </div>
+  }
+  </>
   )
 }
 
