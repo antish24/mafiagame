@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
 
-const JoinRoom = () => {
+const JoinRoom = ({socket}) => {
   const [roomCode,setRoomCode]=useState()
   const [joining,setJoining]=useState(false)
   const [JoinError,setJoinError]=useState('')
@@ -17,7 +17,7 @@ const JoinRoom = () => {
     try {
       let token = localStorage.getItem ('gameUserToken');
       const res=await axios.post(`${BACKENDURL}/game/join`,{gameCode:roomCode,token:token})
-      console.log(res)
+      socket.emit('player join',roomCode);
       setJoining(false)
       navigate(`/room/${res.data.gameCode}`)
   } catch (error) {

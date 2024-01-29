@@ -2,7 +2,7 @@
     width: calc(100% - 20px);
     padding: 10px;
     background: white;
-    box-shadow: 0 0 1px black;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.299);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -91,7 +91,7 @@
 }
 .statbox{
     width: 100%;
-    height: 100px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,7 +105,7 @@
     display: flex;
     align-items: center;
     padding-left: 10px;
-    box-shadow:0 0 1px black;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.299);
 }
 .logoutbtn{
     width: 100%;

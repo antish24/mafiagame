@@ -5,12 +5,13 @@ import { FaGhost } from "react-icons/fa6";
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
 
-const PlayerCard = (l) => {
+const PlayerCard = ({socket,...l}) => {
   const KickPlayer=async()=>{
     if(window.confirm(`u sure to kick${l.userName}`)){
       try {
         const res=await axios.post(`${BACKENDURL}/game/kick`,{id:l._id})
-      alert(res.data.message)
+        socket.emit('player kicked','player');
+        alert(res.data.message)
       } catch (error) {
         alert(error.respones.data.message)
       }

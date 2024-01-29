@@ -1,11 +1,11 @@
 .cont{
-    width: calc(95% - 20px);
+    width: calc(100% - 20px);
     padding: 10px;
     overflow: hidden;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background: white;
-    box-shadow: 0 0 1px rgb(0, 0, 0);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.299);
     position: absolute;
     display: flex;
     flex-direction: column;

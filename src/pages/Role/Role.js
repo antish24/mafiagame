@@ -5,7 +5,7 @@ import axios from 'axios'
 import { BACKENDURL } from '../../helper/Url'
 import {useNavigate} from 'react-router-dom'
 
-const Role = () => {
+const Role = ({socket}) => {
   const [player,setPlayer]=useState()
   const navigate=useNavigate()
 
@@ -27,7 +27,7 @@ const Role = () => {
   return (
     <div className={styles.cont}>
         <span className={styles.title}>Your role</span>
-        <RoleCard character={player}/>
+        <RoleCard character={player} socket={socket}/>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import CreateRoom from '../../components/Form/CreateRoom';
 import JoinRoom from '../../components/Form/JoinRoom';
 import AccountForm from '../../components/Form/AccountForm';
 
-const Home = () => {
+const Home = ({socket}) => {
   const [activeTab, setActiveTab] = useState (2);
   const Tab = [{id: 1, name: 'Create room'}, {id: 2, name: 'Join room'}];
 
@@ -25,7 +25,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {activeTab===1 ? <CreateRoom/>: <JoinRoom/>}
+      {activeTab===1 ? <CreateRoom/>: <JoinRoom socket={socket}/>}
       <AccountForm/>
     </div>
   );

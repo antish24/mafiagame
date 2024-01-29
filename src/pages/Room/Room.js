@@ -6,7 +6,7 @@ import axios from 'axios'
 import { BACKENDURL } from '../../helper/Url'
 import { FaCopy } from 'react-icons/fa'
 
-const Room = () => {
+const Room = ({socket}) => {
   const params =useParams()
   const gameCode=params.gamecode
   localStorage.setItem('playerGameCode',gameCode)
@@ -23,6 +23,38 @@ const Room = () => {
     const [canKick,setCanKick]=useState()
 
     const navigate=useNavigate()
+
+    const getPlayers=async()=>{
+      try {
+        let token = localStorage.getItem ('gameUserToken');
+        const res=await axios.post(`${BACKENDURL}/game/players`,{token:token,gameCode:gameCode})
+        if(res.data.playerStatus)navigate('/role')
+        setPlayers(res.data.players)
+        setKick(res.data.kick)
+        setRoomName(res.data.RoomName)
+        setCanKick(res.data.canKick)
+        setPlayerSize(res.data.playerSize)
+        setPlayerCount(res.data.playerCount)
+      } catch (error) {
+        setRoomErrorMsg(error.response.data.message)
+        setRoomError(true)
+        console.log(error)
+      }
+    }
+
+    socket.on('new player', (data) => {
+      // Handle the message event from the server
+      console.log('Received message:', data);
+      getPlayers()
+      // ... handle the received message ...
+    });
+
+    socket.on('go to role', (data) => {
+      // Handle the message event from the server
+      console.log('Received message:', data);
+      navigate('/role')
+      // ... handle the received message ...
+    });
 
     useEffect(()=>{
       const getPlayers=async()=>{
@@ -53,6 +85,7 @@ const Room = () => {
         console.log(res)
         setStarting(false)
         navigate('/role')
+        socket.emit('start game',gameCode);
       } catch (error) {
         setStarting(false)
         setRoomErrorMsg(error.response.data.message)
@@ -77,7 +110,7 @@ const Room = () => {
         <span className={styles.title}>{roomName}</span>
         <span className={styles.subtitle}>Player ({playerCount}/{playerSize})</span>
         <div className={styles.players}>
-            {Players.map(l=><PlayerCard key={l._id} {...l}/>)}
+            {Players.map(l=><PlayerCard key={l._id} socket={socket} {...l}/>)}
         </div>
         <div className={styles.sharebox}>
           <span className={styles.gamecode} onClick={copyFun}>game code: {gameCode}</span>

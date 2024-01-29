@@ -9,8 +9,23 @@ import Room from './pages/Room/Room';
 import Chat from './components/chat/Chat';
 import Game from './pages/Game/Game';
 import Role from './pages/Role/Role';
+import io from 'socket.io-client';
+import { useEffect } from 'react';
+
+const socket = io('http://localhost:8800');
 
 function App () {
+
+useEffect(() => {
+  socket.on('connect', () => {
+    console.log('Connected to the server');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected from the server');
+  });
+
+}, []);
   const {pathname} = useLocation();
   const hideNavbar = ['/','/'];
   const hideChatbar = ['/','/home'];
@@ -22,16 +37,18 @@ function App () {
       {!shouldHideNavbar && <TopNav/>}
         <Routes>
           <Route element={<LandingPage />} index />
-          <Route element={<Home/>} path="/home" />
-          <Route element={<Room/>} path="/room/:gamecode" />
-          <Route element={<Role/>} path="/role" />
-          <Route element={<Game/>} path="/game" />
+          <Route element={<Home socket={socket}/>} path="/home" />
+          <Route element={<Room socket={socket}/>} path="/room/:gamecode" />
+          <Route element={<Role socket={socket}/>} path="/role" />
+          <Route element={<Game socket={socket}/>} path="/game" />
           <Route element={<PageNotFound />} path="*" />
         </Routes>
-        {!shouldHideChatbar && <Chat/>}
+        {!shouldHideChatbar && <Chat socket={socket}/>}
       </div>
     </div>
   );
 }
 
 export default App;
+
+

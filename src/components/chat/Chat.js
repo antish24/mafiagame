@@ -5,7 +5,7 @@ import CommentCard from '../CommentCard/CommentCard'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
 
-const Chat = () => {
+const Chat = ({socket}) => {
     const [openChat,setOpenChat]=useState(false)
     const [sendChat,setSendChat]=useState(false)
     const [msgValue,setMsgValue]=useState('')
@@ -15,6 +15,21 @@ const Chat = () => {
     const [chatSent,setChatSent]=useState()
     const [chats,setChats]=useState([])
 
+    const getUserData = async () => {
+      let token = localStorage.getItem ('gameUserToken');
+      try {
+        const res = await axios.get (`${BACKENDURL}/chat/chats?token=${token}&&gameCode=${localStorage.getItem('playerGameCode')}`);
+        setChats(res.data.chats)
+      } catch (error) {
+        setChatErr(error.response.data.message)
+      }
+    };
+
+    socket.on('get new message', (data) => {
+      console.log('front message:', data);
+      getUserData()
+    });
+    
     const sendMsg=async(e)=>{
       e.preventDefault()
       setChatSent('sending')
@@ -23,6 +38,7 @@ const Chat = () => {
         let token = localStorage.getItem ('gameUserToken');
         const res=await axios.post(`${BACKENDURL}/chat/post`,{msg:msgValue,token:token,gameCode:localStorage.getItem('playerGameCode')})
         console.log(res)
+        socket.emit('new message', 'msgValue');
         setMsgValue('')
         setChatSent('sent')
         setTimeout(() => {

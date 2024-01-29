@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { BACKENDURL } from '../../helper/Url'
 
-const RoleCard = ({character}) => {
+const RoleCard = ({character,socket}) => {
   const [showFront, setshowFront] = useState (true);
   const [loading, setLoading] = useState (false);
   
@@ -20,6 +20,7 @@ const RoleCard = ({character}) => {
       const res=await axios.post(`${BACKENDURL}/game/ready`,{token:token,gameCode:gameCode})
       console.log(res)
       setLoading(true)
+      socket.emit('role seen',gameCode);
       navigate('/game')
     } catch (error) {
       console.log(error)

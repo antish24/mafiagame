@@ -93,6 +93,7 @@ const AccountForm = () => {
       {editAccount
         ?
         <form onSubmit={updateFun} className={styles.accountbox}>
+            {updateError && <SmallError text={updateError} color={'white'} bg={updateErrorBg}/>}
             <img className={styles.picbox} src={userpic} alt='pic'/>
             <div className={styles.inputbox}>
                 <span className={styles.lable}>UserName</span>
@@ -107,8 +108,7 @@ const AccountForm = () => {
                 <input className={styles.input} value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
             {/* <span className={styles.updateerror}>{updateError}</span> */}
-            {updateError && <SmallError text={updateError} color={'white'} bg={updateErrorBg}/>}
-            <button className={styles.updatebtn} type='submit' disabled={updating}>Update</button>
+            <button className={styles.updatebtn} type='submit' disabled={updating}>{updating ?"Updating":"Update"}</button>
             <button className={styles.cancelbtn} onClick={()=>setEditAccount(false)}>Cancel</button>
         </form>
         :
