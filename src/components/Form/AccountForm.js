@@ -4,8 +4,10 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
 import SmallError from '../Errors/SmallError';
+import { FaCrown, FaDice, FaEdit, FaUser } from 'react-icons/fa';
+import { FaFaceFrown } from 'react-icons/fa6';
 
-const AccountForm = () => {
+const AccountForm = ({socket}) => {
   const [userName, setUserName] = useState ('');
   const [userEmail, setUserEmail] = useState ('');
   const [userpic, setUserPic] = useState ('');
@@ -82,12 +84,35 @@ const AccountForm = () => {
     getUserData ();
   }, [navigate,editAccount]);
 
-  const SeleteGame=async()=>{
-    while(window.confirm("are you sure ?")){
-      window.confirm("are you sure ?")
+  const SeleteGame=async(e)=>{
+    if(window.confirm("join game room ")){
+      try {
+      let token = localStorage.getItem ('gameUserToken');
+      const res=await axios.post(`${BACKENDURL}/game/select`,{gameCode:e,token:token})
+      socket.emit('player join',e);
+      navigate(`/room/${res.data.gameCode}`)
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
     }
-    alert('Fuck you')
   }
+
+  const [games,setGames]=useState([])
+
+  useEffect(()=>{
+    const getGames=async()=>{
+      try {
+        const res=await axios.get(`${BACKENDURL}/game/all`)
+        console.log(res)
+        setGames(res.data.games)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getGames()
+  },[])
+
   return (
     <div className={styles.cont}>
       {editAccount
@@ -120,14 +145,25 @@ const AccountForm = () => {
                 <span className={styles.username}>{userName}</span>
                 <span className={styles.userrole}>{userEmail}</span>
             </div>
-            <span className={styles.editbtn} onClick={()=>setEditAccount(true)}>edit</span>
+            <span className={styles.editbtn} onClick={()=>setEditAccount(true)}><FaEdit/></span>
         </div>
-        <div className={styles.statbox} onClick={SeleteGame}>
-          <span>Game 1: DC Game</span>
-          <span>Game 2: ISH</span>
-          <span>Game 3: NIGER</span>
-          <span>Game 4: hjlgh</span>
-          <span>Game 5: hjlgh</span>
+        <div className={styles.statbox} >
+          <div className={styles.gameslist}>
+            <span className={styles.gametitle}>Public Games</span>
+            <div className={styles.gamelist}>
+            {games && games.map((l,index)=>
+          <div className={styles.gamecard} key={l._id} onClick={()=>SeleteGame(l.gameCode)}>
+            <span className={styles.gamename}>{index + 1}: {l.roomName}</span>
+            <span className={styles.gameplayer}><FaUser  color='rgb(0,140,255)'/>{l.playerCount}</span>
+          </div>)}
+            </div>
+          </div>
+          <div className={styles.mygame}>
+          <span className={styles.gametitle}>My Stat</span>
+          <span className={styles.mylist}><span>6</span><FaDice color='rgb(0,140,255)'/></span>
+          <span className={styles.mywin}><span>2</span><FaCrown color='rgb(0,140,255)'/></span>
+          <span className={styles.myloss}><span>4</span><FaFaceFrown color='rgb(0,140,255)'/></span>
+          </div>
         </div>
         <button className={styles.logoutbtn} disabled={islogout} onClick={LogoutFun}>{islogout?"Lo....":"Logout"}</button>
         <span className={styles.logouterror}>{logoutError}</span>

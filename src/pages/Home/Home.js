@@ -26,7 +26,7 @@ const Home = ({socket}) => {
         ))}
       </div>
       {activeTab===1 ? <CreateRoom/>: <JoinRoom socket={socket}/>}
-      <AccountForm/>
+      <AccountForm socket={socket}/>
     </div>
   );
 };

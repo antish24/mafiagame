@@ -93,19 +93,76 @@
     width: 100%;
     height: 150px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+}
+.gameslist{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     overflow: scroll;
 }
-.statbox span{
-    width: calc(99% - 10px);
-    margin-top: 5px;
-    cursor: pointer;
-    min-height: 35px;
+.mygame{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mywin{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+.mylist{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+.myloss{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+.gametitle{
+    font-weight: bold;
+    text-align: center;
+    height: 25px;
+}
+.gamelist{
+    width: 100%;
+    height: calc(100% - 25px);
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    gap: 2px;
+}
+.gamecard{
+    width: 100%;
+    height: 30px;
+    background: #f0f0f0;
     display: flex;
     align-items: center;
-    padding-left: 10px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.299);
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+.gamename{
+    width: 75%;
+    height: 25px;
+    word-break: break-all;
+    overflow: hidden;
+}
+.gameplayer{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .logoutbtn{
     width: 100%;

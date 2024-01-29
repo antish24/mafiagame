@@ -87,7 +87,7 @@ const Chat = ({socket}) => {
         </div>
         <form className={styles.msgbox} onSubmit={sendMsg}>
             <input required maxLength={160} value={msgValue} onChange={(e)=>setMsgValue(e.target.value)} placeholder='Message'/>
-            <button type='submit' hidden disabled={sendChat}></button>
+            <button type='submit' className={styles.sendmsgbtn} disabled={sendChat}>Send</button>
         </form>
     </div>
   )
