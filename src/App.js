@@ -11,8 +11,9 @@ import Game from './pages/Game/Game';
 import Role from './pages/Role/Role';
 import io from 'socket.io-client';
 import { useEffect } from 'react';
+import { BACKENDURL } from './helper/Url';
 
-const socket = io('http://localhost:8800');
+const socket = io(BACKENDURL);
 
 function App () {
 
