@@ -10,11 +10,23 @@ import {BACKENDURL} from '../../helper/Url';
 const TopNav = () => {
   const navigate=useNavigate()
   
+  const [api, contextHolder] = notification.useNotification({});
+
+  const openNotification = (msg) => {
+    api.open({
+      message: 'Error',
+      description: msg,
+      duration: 3,
+      style: { border: '1px solid var(--color-error)',borderRadius:'10px'}
+    });
+  };
+
   const Logout=async()=>{
     try {
       await axios.post(`${BACKENDURL}/user/logout`,{token:localStorage.getItem('gameUserToken')})
       navigate('/')
     } catch (error) {
+      openNotification('Something went wrong')
       console.log(error)
     }
   }  
@@ -43,6 +55,7 @@ const TopNav = () => {
 
   return (
     <div className={styles.cont}>
+      {contextHolder}
       <NavLink to="/home" className={styles.logo}><span>Mo</span><span>rancho</span></NavLink>
       <Dropdown menu={{items,}} placement='bottomRight'>
           <Space>

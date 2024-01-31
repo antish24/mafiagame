@@ -3,7 +3,6 @@ import styles from './accountform.module.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
-import SmallError from '../Errors/SmallError';
 import {FaEdit} from 'react-icons/fa';
 import {Input, notification} from 'antd';
 

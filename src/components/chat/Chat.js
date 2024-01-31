@@ -4,7 +4,7 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import CommentCard from '../CommentCard/CommentCard'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
-import {Input, notification} from 'antd';
+import {Input} from 'antd';
 
 const Chat = ({socket}) => {
     const [openChat,setOpenChat]=useState(false)
@@ -14,7 +14,6 @@ const Chat = ({socket}) => {
     const {TextArea}=Input
 
     const [chatErr,setChatErr]=useState()
-    const [chatSent,setChatSent]=useState()
     const [chats,setChats]=useState([])
 
     const getUserData = async () => {
@@ -34,7 +33,6 @@ const Chat = ({socket}) => {
     
     const sendMsg=async(e)=>{
       e.preventDefault()
-      setChatSent('sending')
       setSendChat(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
@@ -42,11 +40,6 @@ const Chat = ({socket}) => {
         console.log(res)
         socket.emit('new message', 'msgValue');
         setMsgValue('')
-        setChatSent('sent')
-        setTimeout(() => {
-          setChatSent('');
-        }, 3000);
-        
         setSendChat(false)
       } catch (error) {
         console.log(error)

@@ -4,14 +4,24 @@ import { FaUser } from 'react-icons/fa'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
-import {Input} from 'antd';
+import {Input,notification} from 'antd';
 
 const CreateRoom = () => {
 
     const [roomName,setRoomName]=useState()
     const [playerSize,setPlayerSize]=useState(3)
     const [createing,setCreateing]=useState(false)
-    const [createError,setCreateError]=useState('')
+
+    const [api, contextHolder] = notification.useNotification({});
+
+  const openNotification = (msg) => {
+    api.open({
+      message: 'Error',
+      description: msg,
+      duration: 3,
+      style: { border: '1px solid var(--color-error)',borderRadius:'10px'}
+    });
+  };
 
     const navigate=useNavigate()
 
@@ -19,7 +29,6 @@ const CreateRoom = () => {
         e.preventDefault()
         if(!window.confirm('are you sure?'))return
         setCreateing(true)
-        setCreateError('')
         try {
             let token = localStorage.getItem ('gameUserToken');
             const res=await axios.post(`${BACKENDURL}/game/create`,{roomName:roomName,playerSize:playerSize,token:token})
@@ -28,12 +37,13 @@ const CreateRoom = () => {
             navigate(`/room/${res.data.gameCode}`)
         } catch (error) {
             setCreateing(false)
-            setCreateError(error.response.data.message)
+            openNotification(error.response.data.message)
             console.log(error)
         }
     }
   return (
     <form onSubmit={CreateRoomFun} className={styles.cont}>
+        {contextHolder}
         <span className={styles.title}>Create game room</span>
         <div className={styles.inputbox}>
             <span className={styles.lable}>Room name</span>
@@ -45,7 +55,6 @@ const CreateRoom = () => {
             <input type='range' required min={3} max={10} value={playerSize} onChange={(e)=>setPlayerSize(e.target.value)} className={styles.range}/>
         </div>
         <button type='submit' disabled={createing}>{createing?"Joining":'Create Room'}</button>
-        <span className={styles.errorbox}>{createError}</span>
     </form>
   )
 }
