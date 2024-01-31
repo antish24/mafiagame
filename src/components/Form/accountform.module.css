@@ -2,180 +2,56 @@
     width: calc(100% - 20px);
     padding: 10px;
     background: white;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.299);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.299);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.accountbox{
+.title{
     width: 100%;
-    display: flex;
+    height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.accountform{
+    width: 100%;
+    display:flex ;
     flex-direction: column;
     gap: 10px;
 }
 .picbox{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgb(238, 238, 238);
-}
-.inputbox{
     width: 100%;
+    height: 80px;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    align-items: flex-end;
 }
-.lable{
-    font-size: 15px;
-}
-.input{
-    width: calc(100% - 7px);
-    padding: 0 0 0 5px;
-    height: 30px;
-    outline: none;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-.updatebtn{
-    width: 100%;
-    height: 35px;
-    background: #00ff3c;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.cancelbtn{
-    width: 100%;
-    height: 35px;
-    background: #ff3c00;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-}
-.title{
-    font-size: 25px;
-    font-weight: bold;
-}
-.userbox{
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-}
-.pic{
-    width: 50px;
-    height: 50px;
-    background: rgb(238, 238, 238);
+.zpic{
+    width: 80px;
+    height: 80px;
+    background: whitesmoke;
     border-radius: 50%;
 }
-.userinfo{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: calc(100% - 80px);
+.picbox span{
+    color: var(--second-color);
 }
-.username{
-    font-size: 18px;
-}
-.userrole{
-    font-size: 15px;
-}
-.editbtn{
-    font-size: 18px;
-}
-.statbox{
+.infobox{
     width: 100%;
-    height: 150px;
-    display: flex;
-    align-items: center;
-}
-.gameslist{
-    width: 70%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    gap: 3px;
 }
-.mygame{
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.mywin{
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-}
-.mylist{
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-}
-.myloss{
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-}
-.gametitle{
-    font-weight: bold;
-    text-align: center;
-    height: 25px;
-}
-.gamelist{
-    width: 100%;
-    height: calc(100% - 25px);
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    gap: 2px;
-}
-.gamecard{
-    width: 100%;
-    height: 30px;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    cursor: pointer;
-}
-.gamename{
-    width: 75%;
-    height: 25px;
-    word-break: break-all;
-    overflow: hidden;
-}
-.gameplayer{
-    width: 15%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.logoutbtn{
+.btn{
     width: 100%;
     height: 35px;
-    background: #FF0000;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid var(--second-color);
+    background: var(--second-color);
+    color: var(--text-light);
 }
-.logouterror{
-    width: 100%;
-    text-align: center;
-    color: red;
+.btn:active{
+    background: var(--text-light);
+    color: var(--second-color);
+}
+.btn:disabled{
+    background: whitesmoke;
 }

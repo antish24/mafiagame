@@ -57,17 +57,11 @@
     border: none;
     cursor: pointer;
     background: white;
-    color: rgb(0, 140, 255);
+    color: var(--second-color);
     font-weight: normal;
     font-size: 16px;
     text-align: center;
 }
-.msgbox input{
-    width:calc(100% - 12px);
-    padding:5px 55px 5px 5px;
-    height: 40px;
-    resize: none;
-    border: 1px solid gray;
-    border-radius: 5px;
-    outline: none;
+.msgbox textarea{
+    width:calc(100%);
 }

@@ -4,12 +4,14 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import CommentCard from '../CommentCard/CommentCard'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
+import {Input, notification} from 'antd';
 
 const Chat = ({socket}) => {
     const [openChat,setOpenChat]=useState(false)
     const [sendChat,setSendChat]=useState(false)
     const [msgValue,setMsgValue]=useState('')
     const chatListRef=useRef(null)
+    const {TextArea}=Input
 
     const [chatErr,setChatErr]=useState()
     const [chatSent,setChatSent]=useState()
@@ -82,12 +84,17 @@ const Chat = ({socket}) => {
         </div>
         <div className={styles.chats} ref={chatListRef}>
           {chatErr && <span style={{color:'red',textAlign:'center'}}>{chatErr}</span>}
-          {chatSent && <span style={{color:'green',textAlign:'center'}}>{chatSent}</span>}
           {chats.map(l=><CommentCard key={l._id} {...l}/>)}
         </div>
         <form className={styles.msgbox} onSubmit={sendMsg}>
-            <input required maxLength={160} value={msgValue} onChange={(e)=>setMsgValue(e.target.value)} placeholder='Message'/>
-            <button type='submit' className={styles.sendmsgbtn} disabled={sendChat}>Send</button>
+          <TextArea
+          autoSize={{
+          minRows: 2,
+          maxRows: 3,}}
+          style={{paddingRight:'55px'}}
+          required maxLength={160} value={msgValue} onChange={(e)=>setMsgValue(e.target.value)} placeholder='Message'
+          />
+          <button type='submit' className={styles.sendmsgbtn} disabled={sendChat}>{sendChat?"...":'Send'}</button>
         </form>
     </div>
   )

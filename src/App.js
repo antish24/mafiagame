@@ -12,6 +12,7 @@ import Role from './pages/Role/Role';
 import io from 'socket.io-client';
 import { useEffect } from 'react';
 import { BACKENDURL } from './helper/Url';
+import Account from './pages/Account/Account';
 
 const socket = io(BACKENDURL);
 
@@ -29,7 +30,7 @@ useEffect(() => {
 }, []);
   const {pathname} = useLocation();
   const hideNavbar = ['/','/'];
-  const hideChatbar = ['/','/home'];
+  const hideChatbar = ['/','/home','/account'];
   const shouldHideNavbar = hideNavbar.includes (pathname);
   const shouldHideChatbar = hideChatbar.includes (pathname);
   return (
@@ -42,6 +43,7 @@ useEffect(() => {
           <Route element={<Room socket={socket}/>} path="/room/:gamecode" />
           <Route element={<Role socket={socket}/>} path="/role" />
           <Route element={<Game socket={socket}/>} path="/game" />
+          <Route element={<Account socket={socket}/>} path="/account" />
           <Route element={<PageNotFound />} path="*" />
         </Routes>
         {!shouldHideChatbar && <Chat socket={socket}/>}

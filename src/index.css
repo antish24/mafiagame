@@ -1,14 +1,14 @@
 :root {
   /* Brand Colors */
-  --brand-color: rgb(1, 39, 70);
-  --brand-color3: #fb6f0a;
-  --brand-color2: #008cff53;
+  --first-color: rgb(0,140, 255);
+  --second-color: #fb970a;
   
   /* Background Colors */
   --background-light: rgb(255, 255, 255);
+  --background-dark: rgb(16, 16, 16);
 
   /* Text Colors */
-  --text-dark: rgb(39, 39, 39);
+  --text-dark: rgb(19, 19, 19);
   --text-light: rgb(255, 255, 255);
   
   /* Error/Alert Colors */

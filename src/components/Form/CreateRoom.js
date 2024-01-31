@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {BACKENDURL} from '../../helper/Url';
+import {Input} from 'antd';
 
 const CreateRoom = () => {
 
@@ -36,7 +37,7 @@ const CreateRoom = () => {
         <span className={styles.title}>Create game room</span>
         <div className={styles.inputbox}>
             <span className={styles.lable}>Room name</span>
-            <input placeholder='myfist game' required value={roomName} onChange={(e)=>setRoomName(e.target.value)} type='text' name='gamename' className={styles.input}/>
+            <Input value={roomName} onChange={(e)=>setRoomName(e.target.value)} required placeholder='Game Night'/>
         </div>
         <div className={styles.inputbox}>
             <span className={styles.lable}>Player limit - {playerSize}</span>

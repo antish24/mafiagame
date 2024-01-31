@@ -1,32 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './Home.module.css';
 import CreateRoom from '../../components/Form/CreateRoom';
 import JoinRoom from '../../components/Form/JoinRoom';
-import AccountForm from '../../components/Form/AccountForm';
+import {Tabs} from 'antd';
 
 const Home = ({socket}) => {
-  const [activeTab, setActiveTab] = useState (2);
-  const Tab = [{id: 1, name: 'Create room'}, {id: 2, name: 'Join room'}];
+  const Tab = [
+    {id: 1, name: 'Create room', content: <CreateRoom />},
+    {id: 2, name: 'Join room', content: <JoinRoom socket={socket} />},
+  ];
 
   return (
     <div className={styles.cont}>
-      <div className={styles.tabcont}>
-        {Tab.map (l => (
-          <div
-            className={styles.tab}
-            key={l.id}
-            style={{
-              color: activeTab === l.id ? 'white' : 'rgb(0,140,255)',
-              background: activeTab === l.id ? 'rgb(0,140,255)' : 'white',
-            }}
-            onClick={() => setActiveTab (l.id)}
-          >
-            {l.name}
-          </div>
-        ))}
-      </div>
-      {activeTab===1 ? <CreateRoom/>: <JoinRoom socket={socket}/>}
-      <AccountForm socket={socket}/>
+      <Tabs
+        type="card"
+        items={Tab.map (l => {
+          return {
+            label: l.name,
+            key: l.id,
+            children: l.content,
+          };
+        })}
+      />
     </div>
   );
 };
