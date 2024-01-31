@@ -110,7 +110,7 @@ const AccountForm = ({socket}) => {
           <span>Password</span>
           <Input.Password
             placeholder="input password"
-            status={(password.length < 6)&&"error"}
+            status={(password.length ===0)?"":password.length< 6&& "error"}
             value={password}
             onChange={e => setPassword (e.target.value)}
             visibilityToggle={{
