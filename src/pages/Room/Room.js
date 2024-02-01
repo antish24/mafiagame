@@ -12,6 +12,7 @@ const Room = ({socket}) => {
   localStorage.setItem('playerGameCode',gameCode)
 
     const [starting,setStarting]=useState(false)
+    const [closing,setClosing]=useState(false)
 
     const [Players,setPlayers]=useState([])
     const [playerCount,setPlayerCount]=useState()
@@ -56,6 +57,13 @@ const Room = ({socket}) => {
       // ... handle the received message ...
     });
 
+    socket.on('closed game', (data) => {
+      // Handle the message event from the server
+      console.log('Received message:', data);
+      navigate('/home')
+      // ... handle the received message ...
+    });
+
     useEffect(()=>{
       const getPlayers=async()=>{
         try {
@@ -94,6 +102,23 @@ const Room = ({socket}) => {
         }, 3000);
       }
     }
+    const CloseGame=async()=>{
+      setClosing(true)
+      try {
+        let token = localStorage.getItem ('gameUserToken');
+        const res=await axios.post(`${BACKENDURL}/game/close`,{token:token,gameCode:gameCode})
+        console.log(res)
+        setClosing(false)
+        navigate('/home')
+        socket.emit('close game',gameCode);
+      } catch (error) {
+        setClosing(false)
+        setRoomErrorMsg(error.response.data.message)
+        setTimeout(() => {
+          setRoomErrorMsg('');
+        }, 3000);
+      }
+    }
 
     const [isCopy,setIsCopy]=useState(false)
     const copyFun=async()=>{
@@ -116,6 +141,7 @@ const Room = ({socket}) => {
           <span className={styles.gamecode} onClick={copyFun}>game code: {gameCode}</span>
           <div className={styles.info}>Copy & Share to friends<FaCopy color={isCopy?'green':"gray"} onClick={copyFun}/>{isCopy&&"Copied"}</div>
         </div>
+        <button className={styles.closebtn} disabled={closing} onClick={CloseGame}>{closing?'Closing':"Delete game!"}</button>
         <button className={styles.startbtn} disabled={(playerCount!==playerSize)||kick!==canKick||starting} onClick={StartGame}>{starting?'Starting':"Start game!"}</button>
         <span className={styles.btninfo}>{roomErrorMsg?roomErrorMsg:'the game can be started by the room host now!'}</span>
     </div>

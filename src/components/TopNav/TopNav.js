@@ -22,12 +22,15 @@ const TopNav = () => {
   };
 
   const Logout=async()=>{
-    try {
-      await axios.post(`${BACKENDURL}/user/logout`,{token:localStorage.getItem('gameUserToken')})
-      navigate('/')
-    } catch (error) {
-      openNotification('Something went wrong')
-      console.log(error)
+    if(window.confirm('are you sure?')){
+      try {
+        await axios.post(`${BACKENDURL}/user/logout`,{token:localStorage.getItem('gameUserToken')})
+        navigate('/')
+      } catch (error) {
+        openNotification('Something went wrong')
+        console.log(error)
+        navigate('/')
+      }
     }
   }  
 
