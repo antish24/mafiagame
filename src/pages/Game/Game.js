@@ -4,6 +4,7 @@ import GamePlayerCard from '../../components/PlayerCard/GamePlayerCard'
 import axios from 'axios'
 import { BACKENDURL } from '../../helper/Url'
 import { useNavigate } from 'react-router-dom'
+import Vote from '../../components/Vote/Vote'
 
 const Game = ({socket}) => {
   const [Players,setPlayers]=useState([])
@@ -46,6 +47,7 @@ const Game = ({socket}) => {
     },[])
 
     const CloseGame=async()=>{
+      if(!window.confirm('are you sure'))return
       setClosing(true)
       try {
       let gameCode = localStorage.getItem ('playerGameCode');
@@ -70,6 +72,7 @@ const Game = ({socket}) => {
           }
           <button className={styles.closebtn} onClick={CloseGame} disabled={closing}>{closing?"Closing":"Close Game"}</button>
         </div>
+        {PlayersReady&& <Vote socket={socket} players={Players}/>}
     </div>
   )
 }

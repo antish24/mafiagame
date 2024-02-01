@@ -103,6 +103,7 @@ const Room = ({socket}) => {
       }
     }
     const CloseGame=async()=>{
+      if(!window.confirm('are you sure'))return
       setClosing(true)
       try {
         let token = localStorage.getItem ('gameUserToken');
